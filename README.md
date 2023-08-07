@@ -22,3 +22,12 @@ Running the App
 Start the server: In the root project directory, run npm start or node server.js
 Start the client: In the client directory, run npm start
 Access the app in your web browser at http://localhost:3000
+
+
+Future Improvements
+Implement user authentication to secure user data.
+Allow users to sign up, log in, and log out of their accounts.
+Store user-specific song data in a secure database, such as MongoDB or Firebase Firestore.
+Enhance the user interface with a personalized dashboard and user settings.
+Implement password reset and account recovery features.
+Feel free to explore and modify this React app to suit your needs. Happy coding!
