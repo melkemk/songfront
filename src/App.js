@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSong } from './redux/songSlice';
@@ -7,8 +7,8 @@ import { setSong } from './redux/songSlice';
 
 export default function App() {
 
-  
-const [text,setText]=useState('')
+
+  const [text, setText] = useState('')
   const dispatch = useDispatch();
   const musics = useSelector((state) => state.song);
   useEffect(() => {
@@ -20,25 +20,25 @@ const [text,setText]=useState('')
     if (text === "") {
       return;
     }
-  
+
     dispatch({ type: "SEND_SONG", payload: payload });
-    
+
     setTimeout(() => {
       dispatch({ type: "FETCH_SONGS" });
     }, 3000);
-  
+
     dispatch(setSong([...musics, { name: text, change: false }]));
     setText("");
   };
-  
+
   const updateMusic = (event, id) => {
 
     const value = event.target.value;
     const updatedMusics = musics.map((music) => {
       if (music.id === id) {
-        return { ...music, name: value,change:true };
+        return { ...music, name: value, change: true };
       }
-      return music; 
+      return music;
     }
     );
     dispatch(setSong(updatedMusics));
@@ -46,15 +46,15 @@ const [text,setText]=useState('')
 
   };
 
-  const sentUpdateRequest=(id,name)=>{
-    const payload={id:id,name:name}
+  const sentUpdateRequest = (id, name) => {
+    const payload = { id: id, name: name }
     dispatch({ type: 'UPDATE_SONG', payload: payload });
 
     const updatedMusics = musics.map((music) => {
       if (music.id === id) {
-        return { ...music,change:false };
+        return { ...music, change: false };
       }
-      return music; 
+      return music;
     }
     );
     dispatch(setSong(updatedMusics));
@@ -62,25 +62,25 @@ const [text,setText]=useState('')
 
   const deleteMusic = (id) => {
     const deleteMusics = musics.filter((music) => music.id !== id);
-   dispatch(setSong(deleteMusics))
-id={id:id}
-dispatch({ type: 'DELETE_SONG',payload:id });
+    dispatch(setSong(deleteMusics))
+    id = { id: id }
+    dispatch({ type: 'DELETE_SONG', payload: id });
 
   };
 
-  if(!musics){
-    return(<>
-    loading....
+  if (!musics) {
+    return (<>
+      loading....
     </>)
   }
-if(musics.length===0){
-  return(<>
-        <div className="header">
+  if (musics.length === 0) {
+    return (<>
+      <div className="header">
 
-  nothing in database please add some songs </div>
-  <Add setText={setText} text={text} addNew={addNew} />
-  </>)
-}
+        nothing in database please add some songs </div>
+      <Add setText={setText} text={text} addNew={addNew} />
+    </>)
+  }
   return (
     <>
       <div className="header">music app</div>
@@ -88,7 +88,7 @@ if(musics.length===0){
         {musics.map((music) => (
           <Main key={music.id} music={music} updateMusic={updateMusic} deleteMusic={deleteMusic} sentUpdateRequest={sentUpdateRequest} />
         ))}
-    <Add setText={setText} text={text} addNew={addNew} />
+        <Add setText={setText} text={text} addNew={addNew} />
       </div>
     </>
   );
@@ -100,7 +100,7 @@ if(musics.length===0){
 
 
 function Main(props) {
-  const { music, updateMusic, deleteMusic,sentUpdateRequest } = props;
+  const { music, updateMusic, deleteMusic, sentUpdateRequest } = props;
 
   return (
     <div className="each">
@@ -117,8 +117,8 @@ function Main(props) {
       <button
         type="button"
         className={`btn ${music.change ? "btn-warning" : "btn-danger"}`}
-        onClick={() =>  {
-          music.change ? sentUpdateRequest(music.id,music.name): deleteMusic(music.id)
+        onClick={() => {
+          music.change ? sentUpdateRequest(music.id, music.name) : deleteMusic(music.id)
         }}
       >
         {music.change ? "update" : "delete"}
@@ -126,14 +126,14 @@ function Main(props) {
     </div>
   );
 
-  
+
 }
 
 
-function Add(props){
-  const {text,setText,addNew}=props;
+function Add(props) {
+  const { text, setText, addNew } = props;
 
-  
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
@@ -149,23 +149,23 @@ function Add(props){
   }, [addNew]);
 
 
-  return(
-  <div>
+  return (
+    <div>
 
-  <div className="each">
-<span>
-  <input type='text'  value={text} className='text input' id="text" onChange={(event)=>{setText(event.target.value)}}
-  />
-</span>
-<button
-  type="button"
-  
-  className=" btn btn-secondary" 
-  onClick={() => addNew()}
->
-add      </button>
-</div>
+      <div className="each">
+        <span>
+          <input type='text' value={text} className='text input' id="text" onChange={(event) => { setText(event.target.value) }}
+          />
+        </span>
+        <button
+          type="button"
+
+          className=" btn btn-secondary"
+          onClick={() => addNew()}
+        >
+          add      </button>
+      </div>
 
 
-  </div>)
+    </div>)
 }

@@ -8,7 +8,7 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
-    song:songReducer
+    song: songReducer
   },
   middleware: [sagaMiddleware],
 });
