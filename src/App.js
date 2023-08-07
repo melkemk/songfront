@@ -133,15 +133,18 @@ function Main(props) {
 function Add(props){
   const {text,setText,addNew}=props;
 
+  
   useEffect(() => {
-    document.getElementById('text').addEventListener('keypress', (event) => {
+    const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
         addNew();
       }
-    });
+    };
+
+    document.getElementById('text').addEventListener('keypress', handleKeyPress);
 
     return () => {
-      document.getElementById('text').removeEventListener('keypress', () => {});
+      document.getElementById('text').removeEventListener('keypress', handleKeyPress);
     };
   }, [addNew]);
 
