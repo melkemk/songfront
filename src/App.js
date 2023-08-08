@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSong } from './redux/songSlice';
-
-
+import { ThreeDot } from "react-loading-indicators";
 
 export default function App() {
-
-
   const [text, setText] = useState('')
   const dispatch = useDispatch();
   const musics = useSelector((state) => state.song);
@@ -69,10 +66,18 @@ export default function App() {
   };
 
   if (!musics) {
-    return (<>
-      loading....
-    </>)
-  }
+    
+      return (
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center", 
+          height: "100vh" 
+        }}>
+          <ThreeDot />
+        </div>
+      );    
+}
   if (musics.length === 0) {
     return (<>
       <div className="header">
@@ -159,7 +164,6 @@ function Add(props) {
         </span>
         <button
           type="button"
-
           className=" btn btn-secondary"
           onClick={() => addNew()}
         >
